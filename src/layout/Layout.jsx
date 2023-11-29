@@ -6,9 +6,7 @@ import Navbar from "../views/navbar/Navbar";
 function Layout() {
   return (
     <Box>
-      <Box>
-        <Navbar />
-      </Box>
+      <Navbar />
       <Outlet />
     </Box>
   );

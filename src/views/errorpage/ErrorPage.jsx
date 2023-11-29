@@ -35,8 +35,7 @@ export default function Error() {
               Sorry, an unexpected error has occurred.
             </Typography>
             <Typography color="error" variant="h6">
-              {error.data}
-              {error.statusText || error.message}"
+              {error.data} is "{error.statusText || error.message}"
             </Typography>
             <Button
               sx={{ marginTop: "20px" }}

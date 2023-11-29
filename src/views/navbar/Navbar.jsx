@@ -14,7 +14,7 @@ import {
   Avatar,
   Tooltip,
 } from "@mui/material";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -29,10 +29,11 @@ import { styled, alpha } from "@mui/material/styles";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  borderRadius: "24px",
+  color: "initial",
+  backgroundColor: alpha(theme.palette.common.white, 1),
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: "#e6e6e6",
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
@@ -61,14 +62,26 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
-    [theme.breakpoints.up("xs")]: {
-      width: "29ch",
+    [theme.breakpoints.up("xl")]: {
+      width: "88ch",
+    },
+    [theme.breakpoints.between("lg", "xl")]: {
+      width: "64ch",
+    },
+    [theme.breakpoints.between("md", "lg")]: {
+      width: "31ch",
+    },
+    [theme.breakpoints.between("sm", "md")]: {
+      width: "35ch",
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "25ch",
     },
   },
 }));
 const settings = ["Profile", "My Account", "Dashboard", "Logout"];
 function Navbar() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenUserMenu = (event) => {
@@ -108,30 +121,26 @@ function Navbar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton
-          href="/"
-          onClick={(e) => {
-            e.preventDefault();
-          }}
-          size="large"
-          aria-label="Homepage"
-          color="inherit"
-        >
+      <MenuItem
+        href="/"
+        onClick={(e) => {
+          e.preventDefault();
+          navigate("/");
+        }}
+      >
+        <IconButton size="large" aria-label="Homepage" color="inherit">
           <HomeIcon />
         </IconButton>
         <p>Homepage</p>
       </MenuItem>
-      <MenuItem>
-        <IconButton
-          href="/feed"
-          onClick={(e) => {
-            e.preventDefault();
-          }}
-          size="large"
-          aria-label="Timeline"
-          color="inherit"
-        >
+      <MenuItem
+        href="/feed"
+        onClick={(e) => {
+          e.preventDefault();
+          navigate("/feed");
+        }}
+      >
+        <IconButton size="large" aria-label="Timeline" color="inherit">
           <FeedIcon />
         </IconButton>
         <p>Timeline</p>
@@ -172,7 +181,11 @@ function Navbar() {
       <MenuItem>
         <Box sx={{ flexGrow: 0 }}>
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar alt="xMoZues" src="assets/person/1.jpg" />
+            <Avatar
+              sx={{ objectFit: "cover" }}
+              alt="xMoZues"
+              src="assets/person/1.jpg"
+            />
           </IconButton>
 
           <Menu
@@ -206,7 +219,13 @@ function Navbar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar
+          sx={{
+            height: "64px",
+            paddingLeft: { xs: "36px", sm: "12px" },
+            paddingRight: { xs: "0px", sm: "12px" },
+          }}
+        >
           {/* <IconButton
             size="large"
             edge="start"
@@ -220,18 +239,21 @@ function Navbar() {
             variant="h5"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+            sx={{ display: { xs: "none", sm: "flex" } }}
           >
             <Link
-              onClick={(e) => e.preventDefault()}
-              href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/time");
+              }}
               color="inherit"
               sx={{ textDecoration: "none" }}
             >
               xMoSocial
             </Link>
           </Typography>
-          <Box sx={{ display: { sm: "none", md: "flex" }, flexGrow: 1 }} />
+          {/* spacing box on the left */}
+          <Box sx={{ display: { xs: "none", sm: "flex" }, flexGrow: 1 }} />
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -241,7 +263,14 @@ function Navbar() {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
-          <Box sx={{ display: "flex" }}>
+          {/* spacing box on the right */}
+          <Box
+            sx={{
+              display: { xs: "none", sm: "flex" },
+              flexGrow: 1,
+            }}
+          />
+          <Box sx={{ display: "flex", marginRight: 1 }}>
             <Typography
               variant="body1"
               noWrap
@@ -252,7 +281,10 @@ function Navbar() {
               }}
             >
               <Link
-                onClick={(e) => e.preventDefault()}
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate("/home");
+                }}
                 href="/"
                 color="inherit"
                 sx={{ textDecoration: "none" }}
@@ -267,8 +299,11 @@ function Navbar() {
               sx={{ display: { xs: "none", md: "flex" }, marginLeft: 2 }}
             >
               <Link
-                onClick={(e) => e.preventDefault()}
-                href="/timeline"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate("/feed");
+                }}
+                href="/feed"
                 color="inherit"
                 sx={{ textDecoration: "none" }}
               >
@@ -276,7 +311,7 @@ function Navbar() {
               </Link>
             </Typography>
           </Box>
-          <Box sx={{ flexGrow: 1 }} />
+
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"
@@ -306,22 +341,11 @@ function Navbar() {
               </Badge>
             </IconButton>
 
-            {/* <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton> */}
             <Box sx={{ flexGrow: 0, marginLeft: 2 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
-                    sx={{ width: 56, height: 56 }}
+                    sx={{ width: 56, height: 56, objectFit: "cover" }}
                     alt="xMoZues"
                     src="assets/person/1.jpg"
                   />
