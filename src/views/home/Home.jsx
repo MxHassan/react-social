@@ -1,7 +1,8 @@
-import { Box, Container } from "@mui/material";
-import { Person2Rounded } from "@mui/icons-material";
-function Home() {
-  return <Box>Home</Box>;
-}
+import React from "react";
+import MainLayout from "../../layout/MainLayout";
+
+const Home = () => {
+  return <MainLayout />;
+};
 
 export default Home;

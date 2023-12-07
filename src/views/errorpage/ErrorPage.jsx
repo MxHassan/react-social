@@ -4,7 +4,7 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import "./errorpage.css";
 
-export default function Error() {
+export default function ErrorPage() {
   const navigate = useNavigate();
 
   const error = useRouteError();
@@ -23,7 +23,11 @@ export default function Error() {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             {error.status === 404 ? (
-              <img src="assets/404-tranc.png" alt="Error 404" />
+              <img
+                className="errorImg"
+                src="assets/404-tranc.png"
+                alt="Error 404"
+              />
             ) : (
               <Typography color="error" variant="h1">
                 {error.status}
